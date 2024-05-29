@@ -1,0 +1,24 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "cppdbg",
+      "request": "launch",
+      "args": [],
+      "stopAtEntry": false,
+      "externalConsole": true,
+      "cwd": "c:/Users/mroja/Desktop/Cosas de la U/Especialidad/Dcc feliz/Weas q toi dando/Logaritmos/Tarea 2/Dijkstra-w-amortized-analysis",
+      "program": "c:/Users/mroja/Desktop/Cosas de la U/Especialidad/Dcc feliz/Weas q toi dando/Logaritmos/Tarea 2/Dijkstra-w-amortized-analysis/build/Debug/outDebug",
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    }
+  ]
+}
