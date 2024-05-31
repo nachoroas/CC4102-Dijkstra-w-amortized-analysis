@@ -19,12 +19,12 @@ class QHeap{
     void buildHeap(vector<pair<double,int>> input){
         Heap = input;
 
-        for(int i = Heap.size() - 1; i > -1;i--){
+        for(int i = Heap.size()/2 - 1; i >= 0 ;i--){
             heapify(i);
         }
 
         for(int i = 0; i < Heap.size();i++){
-            this->indices[this->Heap[i].second] = i;
+            this->indices[this->Heap[i].second] = i;  
         }
     }
 
@@ -32,8 +32,6 @@ class QHeap{
         int smallest = i;
         int l = 2*i + 1;
         int r = 2*i +2;
-
-    
 
         if(l < Heap.size() && Heap[l].first < Heap[smallest].first){
 
@@ -52,6 +50,34 @@ class QHeap{
         }
     }
 
+    // Funcion para revisar si es un heap, es para debugear
+
+    bool isHeap() {
+
+        int n = Heap.size();
+
+        for (int i = 0; i <= (n / 2) - 1; ++i) {
+
+            int left = 2 * i + 1;
+
+            int right = 2 * i + 2;
+
+
+            if (left < n && Heap[left].first < Heap[i].first)
+                return false;
+
+
+            if (right < n && Heap[right].first < Heap[i].first)
+                return false;
+        }
+
+        return true;
+    }
+    
+
+    // No se usa push asi que documentada por mientras
+
+    /*
     void push(pair<double,int> x){
         Heap.push_back(x);
         int pos = Heap.size()-1;
@@ -64,6 +90,7 @@ class QHeap{
             pos = parent;
         }
     }
+    */
 
     void pop(){
         Heap[0] = Heap[Heap.size()-1];
@@ -77,8 +104,8 @@ class QHeap{
             if(Heap[left].first < Heap[next].first) next = left;
             if(right < Heap.size() && Heap[right].first < Heap[next].first) next = right;
             if(next == pos) break;
+            swap(indices[Heap[pos].second],indices[Heap[next].second]);
             swap(Heap[pos], Heap[next]);
-            swap(indices[pos],indices[next]);
             pos = next;
         }
     }
@@ -100,10 +127,11 @@ class QHeap{
         while(pos > 0){
             int parent = (pos-1)/2;
             if(Heap[parent].first <= Heap[pos].first) break;
+            swap(indices[Heap[parent].second],indices[Heap[pos].second]);
             swap(Heap[parent], Heap[pos]);
-            swap(indices[parent],indices[pos]);
             pos = parent;
         }
+
     }
     
 };
