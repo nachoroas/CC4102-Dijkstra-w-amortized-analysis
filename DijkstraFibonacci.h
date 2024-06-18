@@ -2,7 +2,7 @@
 
 using namespace std;
 
-pair<vector<double>,vector<int>> dijkstraFibonacci(vector<vector<pair<int,int>>> grafo, int raiz){
+pair<vector<double>,vector<int>> dijkstraFibonacci(vector<vector<pair<int,double>>> grafo, int raiz){
     
     vector<double> distancias(grafo.size(), INT_MAX);
     vector<int> previos(grafo.size(), INT_MIN);
@@ -12,25 +12,30 @@ pair<vector<double>,vector<int>> dijkstraFibonacci(vector<vector<pair<int,int>>>
 
     QFibonacci cola = QFibonacci(grafo.size());
 
-    cola.insert(0, raiz);
+    cola.insert(raiz, 0);
     
     for (int i = 0; i < grafo.size(); i++){
         if (i != raiz){
-            cola.insert(INT_MAX, i);
+            cola.insert(i, INT_MAX);
         }
     }
 
     while(!cola.empty()){
-        FibonacciNodo* x= cola.extractMin();
 
-        for(auto [distancia_vecino, nodo_vecino]: grafo[x->nodeIndex]){
+        //cout << cola.n << endl;
 
-            if(distancias[nodo_vecino] > distancias[x->nodeIndex] + distancia_vecino){
-                distancias[nodo_vecino] = distancias[x->nodeIndex] + distancia_vecino;
-                previos[nodo_vecino] = x->nodeIndex;
-                cola.decreaseKey(nodo_vecino, distancias[x->nodeIndex]+distancia_vecino);
+        FibonacciNode* x= cola.extractMin();
+
+        for(auto [nodo_vecino, distancia_vecino]: grafo[x->indice]){
+
+            if(distancias[nodo_vecino] > distancias[x->indice] + distancia_vecino){
+                distancias[nodo_vecino] = distancias[x->indice] + distancia_vecino;
+                previos[nodo_vecino] = x->indice;
+                cola.decreaseKey(nodo_vecino, distancias[x->indice]+distancia_vecino);
             }
         }
+
+        delete x;
     }
 
     return {distancias,previos};
