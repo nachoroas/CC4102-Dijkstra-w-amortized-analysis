@@ -17,7 +17,7 @@ struct FibonacciNode {
 };
 
 class QFibonacci{
-	private:
+	public:
 	FibonacciNode* minNode;
 	int n;
 	vector<FibonacciNode*> degTable;
@@ -68,12 +68,15 @@ class QFibonacci{
 		if (minN != NULL) {
 			int deg = minN->degree;
 			FibonacciNode* child = minN->child;
+			FibonacciNode* otherChild;
 			for (int i = 0; i < deg; i++) {
-				_addToRoot(child);
+				otherChild = child;
 				child = child->right;
+				_addToRoot(otherChild);
 			}
 			_removeFromRoot(minN);
-			if (minN == minN->right) {
+			this->n--;
+			if (this->n == 0) {
 				this->minNode = NULL;
 			}
 			else {
@@ -83,7 +86,6 @@ class QFibonacci{
 				minNLeft->right = this->minNode;
 				_consolidate();
 			}
-			this->n--;
 		}
 		return minN;
 	}
@@ -91,19 +93,21 @@ class QFibonacci{
 	void decreaseKey(int nodo, double new_distance) {
 		//Decrease the distance of the node in the Fibonacci heap that has index u. O(1) operation
 		FibonacciNode* node = this->nodePtrs[nodo];
-		if (new_distance > node->distance) return;
+		if (new_distance > node->distance){
+			return;
+		}
 		node->distance = new_distance;
-		if (node->parent != NULL) {
-			if (node->distance < node->parent->distance) {
-				FibonacciNode* parentNode = node->parent;
-				_cut(node);
-				_cascadingCut(parentNode);
-			}
+		FibonacciNode* parentNode = node->parent;
+		if (parentNode != NULL && node->distance < parentNode->distance) {
+			_cut(node);
+			_cascadingCut(parentNode);
+			
 		}
 		if (node->distance < this->minNode->distance) {
 			this->minNode = node;
 		}
 	}
+
 	private:
 	//The following are private functions used by the public methods above
 	void _addToRoot(FibonacciNode* new_node) {
@@ -126,6 +130,7 @@ class QFibonacci{
 			new_node->left = new_node;
 		}
 	}
+
 	void _removeFromRoot(FibonacciNode* node) {
 		if (node->right != node) {
 			node->right->left = node->left;
@@ -141,10 +146,12 @@ class QFibonacci{
 			node->parent->degree--;
 		}
 	}
+
 	void _cut(FibonacciNode* node) {
 		_removeFromRoot(node);
 		_addToRoot(node);
 	}
+
 	void _addChild(FibonacciNode* parentNode, FibonacciNode* newChildNode) {
 		if (parentNode->degree == 0) {
 			parentNode->child = newChildNode;
@@ -163,6 +170,7 @@ class QFibonacci{
 		newChildNode->parent = parentNode;
 		parentNode->degree++;
 	}
+
 	void _cascadingCut(FibonacciNode* node) {
 		FibonacciNode* parentNode = node->parent;
 		if (parentNode != NULL) {
@@ -175,11 +183,13 @@ class QFibonacci{
 			}
 		}
 	}
+
 	void _link(FibonacciNode* highNode, FibonacciNode* lowNode) {
 		_removeFromRoot(highNode);
 		_addChild(lowNode, highNode);
 		highNode->mark = false;
 	}
+
 	void _consolidate() {
 		int deg, rootCnt = 0;
 		if (this->n > 1) {
@@ -195,6 +205,7 @@ class QFibonacci{
 				currConsolNode = currNode;
 				currNode = currNode->right;
 				deg = currConsolNode->degree;
+				
 				while (true) {
 					while (deg >= int(this->degTable.size())) {
 						this->degTable.push_back(NULL);
@@ -214,6 +225,7 @@ class QFibonacci{
 						deg++;
 					}
 				}
+				
 			}
 			this->minNode = NULL;
 			for (size_t i = 0; i < this->degTable.size(); i++) {
