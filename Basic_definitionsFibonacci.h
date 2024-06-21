@@ -157,7 +157,6 @@ class QFibonacci{
 			parentNode->child = newChildNode;
 			newChildNode->right = newChildNode;
 			newChildNode->left = newChildNode;
-			newChildNode->parent = parentNode;
 		}
 		else {
 			FibonacciNode* child1 = parentNode->child;
