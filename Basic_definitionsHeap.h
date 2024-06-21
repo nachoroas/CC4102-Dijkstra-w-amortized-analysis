@@ -12,12 +12,9 @@ class QHeap{
         vector<pair<double,int>> Heap;
         vector<int> indices;
 
-    QHeap(int graph_size){
-        indices = vector<int>(graph_size);
-    }
-
     void buildHeap(vector<pair<double,int>> input){
         Heap = input;
+        indices = vector<int>(input.size());
 
         for(int i = Heap.size()/2 - 1; i >= 0 ;i--){
             heapify(i);
@@ -75,23 +72,6 @@ class QHeap{
     }
     
 
-    // No se usa push asi que documentada por mientras
-
-    /*
-    void push(pair<double,int> x){
-        Heap.push_back(x);
-        int pos = Heap.size()-1;
-        this->indices[x.second] = pos;
-        while(pos > 0){
-            int parent = (pos-1)/2;
-            if(Heap[parent].first <= Heap[pos].first) break;
-            swap(Heap[parent], Heap[pos]);
-            swap(indices[parent],indices[pos]);
-            pos = parent;
-        }
-    }
-    */
-
     void pop(){
         Heap[0] = Heap[Heap.size()-1];
     
@@ -120,7 +100,7 @@ class QHeap{
 
     void decreaseKey(int nodo, double new_distance){
 
-		int pos = indices[nodo];
+        int pos = indices[nodo];
 
         Heap[pos].first = new_distance;
         

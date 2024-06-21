@@ -1,4 +1,4 @@
-#include <vector>
+ #include <vector>
 #include <map>
 #include <random>
 #include <chrono>
@@ -16,7 +16,7 @@ vector<vector<pair<int,double>>> generadorGrafo(int v, int e){
 
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 
-    srand(seed);
+    //generador(seed);
 
     std::mt19937 gen(seed);
 
@@ -37,7 +37,7 @@ vector<vector<pair<int,double>>> generadorGrafo(int v, int e){
     // Vector con todos los pares posibles de arcos
     // De la forma {i,j}, con i < j; no existe {j, i} en el vector
 
-    vector<pair<int,int>> aristas_posibles(v*(v-1)/2);
+    vector<pair<int,int>> aristas_posibles((v*(v-1))/2);
 
     // Llenamos el vector de aristas posibles
 
@@ -50,17 +50,15 @@ vector<vector<pair<int,double>>> generadorGrafo(int v, int e){
         }
     }
 
+    bool hola = current == (v*(v-1))/2;
+
     //Inicializamos el grafo a entregar
 
     vector<vector<pair<int,double>>> lista(v);
 
-    int a = 0;
-
     // Primeras v-1 aristas
 
     for(int i = 1; i < v; i++){
-
-        a += 1;
 
         // Cambiamos el generador al rango nodo 0 y el nodo i-1
         
@@ -122,8 +120,3 @@ vector<vector<pair<int,double>>> generadorGrafo(int v, int e){
 
     return lista;
 }
-
-
-
-
-

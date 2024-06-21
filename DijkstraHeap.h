@@ -1,4 +1,4 @@
-
+ 
 #include "Basic_definitionsHeap.h"
 
 
@@ -26,7 +26,7 @@ pair<vector<int>,vector<double>> dijkstraHeap(vector<vector<pair<int,double>>> g
 
 
     //Creamos un Heap para almacenar los pares 
-    QHeap cola = QHeap(grafo.size());
+    QHeap cola = QHeap();
 
 
     //Creamos vector de pares, del tipo {distancia,nodo}
