@@ -37,7 +37,7 @@ class QFibonacci{
 	}
 
 	void insert(int nodo, double distance) {
-		//Insert the vertex u with the specified distance (value for L(u)) into the Fibonacci heap. O(1) operation
+		//Insert the vertex u with the specified distance (value for L(nodo)) into the Fibonacci heap. O(1) operation
 		this->nodePtrs[nodo] = new FibonacciNode;
 		this->nodePtrs[nodo]->indice = nodo;
 		FibonacciNode* node = this->nodePtrs[nodo];
@@ -91,7 +91,7 @@ class QFibonacci{
 	}
 	
 	void decreaseKey(int nodo, double new_distance) {
-		//Decrease the distance of the node in the Fibonacci heap that has index u. O(1) operation
+		//Decrease the distance of the node in the Fibonacci heap that has index nodo. O(1) operation
 		FibonacciNode* node = this->nodePtrs[nodo];
 		if (new_distance > node->distance){
 			return;
