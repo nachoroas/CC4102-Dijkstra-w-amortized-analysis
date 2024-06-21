@@ -120,7 +120,6 @@ vector<vector<pair<int,double>>> generadorGrafo(int v, int e){
 
     }
 
-
     return lista;
 }
 
